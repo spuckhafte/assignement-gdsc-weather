@@ -7,25 +7,23 @@ type Weather = {
     weather: [{
         id: number,
         type: "Thunderstorm" | "Drizzle" | "Rain" | "Snow" | "Mist" | "Clear" | "Clouds",
-    }]
+    }],
 }
 
 export default () => {
     const [city, setCity] = useState("New York");
     const [weather, setWeather] = useState<Weather>();
+    const [go, setGo] = useState(false);
 
     useEffect(() => {
         fetch(api(city)).then(data => data.json())
             .then((wet: Weather) => {
                 setWeather(parseWeather(wet));
             });
-    }, []);
+    }, [go]);
 
     function search() {
-        fetch(api(city)).then(data => data.json())
-            .then((wet: Weather) => {
-                setWeather(parseWeather(wet));
-            });
+        setGo(prev => !prev);
     }
 
     return <div
