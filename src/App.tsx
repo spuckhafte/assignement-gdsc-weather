@@ -17,9 +17,7 @@ export default () => {
     useEffect(() => {
         fetch(api(city)).then(data => data.json())
             .then((wet: Weather) => {
-                console.log(wet)
-                wet = parseWeather(wet);
-                setWeather(wet);
+                setWeather(parseWeather(wet));
             });
     }, []);
 
@@ -106,6 +104,9 @@ function parseWeather(weather: Weather) {
         if (id > 800) {
             weather.weather[0].id = 900;
             weather.weather[0].type = "Clouds";
+        }
+        if (id == 800) {
+            weather.weather[0].type = "Clear";
         }
     }
 
